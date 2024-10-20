@@ -1,0 +1,6 @@
+name: argocd
+chartPath: charts/argocd
+valueFiles:
+  - values.yaml
+autoSync: true
+prune: false
