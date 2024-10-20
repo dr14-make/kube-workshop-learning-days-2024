@@ -8,14 +8,14 @@ spec:
   source:
     repoURL: git@github.com:dr14-make/kube-workshop-learning-days-2024.git
     targetRevision: HEAD
-    path: charts/external-secrets
+    path: charts/argocd
     helm:
-      releaseName: argocd
+      releaseName: argo-cd
       valueFiles:
         - values.yaml
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: external-secrets
+    namespace: argocd
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
