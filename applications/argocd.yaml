@@ -1,4 +1,5 @@
 name: argocd
+releaseName: argo-cd
 chartPath: charts/argocd
 valueFiles:
   - values.yaml
