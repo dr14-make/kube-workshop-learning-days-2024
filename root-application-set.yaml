@@ -5,22 +5,35 @@ metadata:
   namespace: argocd
 spec:
   goTemplate: true
-  goTemplateOptions: ["missingkey=error"]
   generators:
     - git:
         repoURL: git@github.com:dr14-make/kube-workshop-learning-days-2024.git
         revision: HEAD
         files:
-          - path: "applications/*.json"
+          - path: "applications/*.yaml"
   template:
     metadata:
-      name: "{{.cluster.name}}-guestbook"
+      name: "{{.name}}"
     spec:
-      project: default
+      project: { { .project | default default } }
       source:
-        repoURL: https://github.com/argoproj/argo-cd.git
-        targetRevision: HEAD
-        path: "applicationset/examples/git-generator-files-discovery/apps/guestbook"
+        repoURL: git@github.com:dr14-make/kube-workshop-learning-days-2024.git
+        targetRevision: "{{ .targetRevision | default HEAD}}"
+        path: "{{ .path }}"
       destination:
-        server: "{{.cluster.address}}"
-        namespace: guestbook
+        server: "{{ .cluster | default https://kubernetes.default.svc }}"
+        namespace: "{{ .namespace }}"
+  templatePatch: |
+    spec:
+      source:
+        helm:
+          releaseName: {{ .releaseName }}
+          valueFiles:
+          {{- range $valueFile := .valueFiles }}
+            - {{ $valueFile }}
+          {{- end }}
+    {{- if .autoSync }}
+      syncPolicy:
+        automated:
+          prune: {{ .prune }}
+    {{- end }}
