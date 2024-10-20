@@ -1,0 +1,6 @@
+{
+  "name": "argocd",
+  "releaseName": "argocd",
+  "valueFile": "values.yaml",
+  "path": "charts/argocd"
+}
