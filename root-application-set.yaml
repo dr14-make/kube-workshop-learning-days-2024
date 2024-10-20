@@ -15,17 +15,19 @@ spec:
     metadata:
       name: "{{.name}}"
     spec:
-      project: { { .project | default default } }
+      project: default
       source:
         repoURL: git@github.com:dr14-make/kube-workshop-learning-days-2024.git
-        targetRevision: "{{ .targetRevision | default HEAD}}"
-        path: "{{ .path }}"
       destination:
-        server: "{{ .cluster | default https://kubernetes.default.svc }}"
         namespace: "{{ .namespace }}"
   templatePatch: |
     spec:
+      project: {{ .project | default "default" }}
+      destination:
+        server: {{ .cluster | default "https://kubernetes.default.svc" }}
       source:
+        targetRevision: {{ .targetRevision | default "HEAD"}}
+        path: "{{ .path }}"
         helm:
           releaseName: {{ .releaseName }}
           valueFiles:
@@ -34,6 +36,8 @@ spec:
           {{- end }}
     {{- if .autoSync }}
       syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
         automated:
           prune: {{ .prune }}
     {{- end }}
