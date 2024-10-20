@@ -18,6 +18,7 @@ spec:
       project: default
       source:
         repoURL: git@github.com:dr14-make/kube-workshop-learning-days-2024.git
+        path: "{{ .chartPath }}"
       destination:
         namespace: "{{ .namespace }}"
   templatePatch: |
@@ -27,7 +28,7 @@ spec:
         server: {{ .cluster | default "https://kubernetes.default.svc" }}
       source:
         targetRevision: {{ .targetRevision | default "HEAD"}}
-        path: "{{ .path }}"
+
         helm:
           releaseName: {{ .releaseName }}
           valueFiles:
