@@ -28,7 +28,6 @@ spec:
         server: {{ .cluster | default "https://kubernetes.default.svc" }}
       source:
         targetRevision: {{ .targetRevision | default "HEAD"}}
-
         helm:
           releaseName: {{ .releaseName }}
           valueFiles:
@@ -40,5 +39,5 @@ spec:
         syncOptions:
           - CreateNamespace=true
         automated:
-          prune: {{ .prune }}
+          prune: {{ .prune | default false }}
     {{- end }}
