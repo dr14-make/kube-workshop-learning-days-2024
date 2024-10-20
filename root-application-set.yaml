@@ -19,25 +19,27 @@ spec:
       source:
         repoURL: git@github.com:dr14-make/kube-workshop-learning-days-2024.git
         path: "{{ .chartPath }}"
-      destination:
-        namespace: "{{ .namespace }}"
+      destination: {}
   templatePatch: |
     spec:
       project: {{ .project | default "default" }}
       destination:
         server: {{ .cluster | default "https://kubernetes.default.svc" }}
+        namespace: {{ .namespace | default .name }}
       source:
         targetRevision: {{ .targetRevision | default "HEAD"}}
         helm:
-          releaseName: {{ .releaseName }}
+          releaseName: {{ .releaseName | default .name }}
+          {{- if .valueFiles }}
           valueFiles:
           {{- range $valueFile := .valueFiles }}
             - {{ $valueFile }}
           {{- end }}
-    {{- if .autoSync }}
+          {{- end }}
       syncPolicy:
         syncOptions:
           - CreateNamespace=true
+        {{- if .autoSync }}
         automated:
           prune: {{ .prune | default false }}
-    {{- end }}
+        {{- end }}
