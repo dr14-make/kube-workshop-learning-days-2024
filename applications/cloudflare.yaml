@@ -1,0 +1,6 @@
+name: cloudflare
+chartPath: charts/cloudflare-tunnel
+valueFiles:
+  - values.yaml
+autoSync: true
+prune: false
