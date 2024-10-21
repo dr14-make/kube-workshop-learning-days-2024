@@ -1,5 +1,5 @@
-name: external-secrets
-chartPath: charts/external-secrets
+name: traefik
+chartPath: charts/traefik
 valueFiles:
   - values.yaml
 autoSync: true
