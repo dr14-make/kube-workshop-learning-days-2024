@@ -1,0 +1,6 @@
+name: external-secrets
+chartPath: charts/external-secrets
+valueFiles:
+  - values.yaml
+autoSync: true
+prune: false
