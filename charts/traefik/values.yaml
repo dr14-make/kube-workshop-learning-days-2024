@@ -8,4 +8,6 @@ traefik:
       # -- Alternative logging levels are DEBUG, PANIC, FATAL, ERROR, WARN, and INFO.
       level: DEBUG
   additionalArguments:
-    - '--log.level=DEBUG'
+    - "--log.level=DEBUG"
+  service:
+    type: ClusterIP
