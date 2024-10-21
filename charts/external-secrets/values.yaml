@@ -1,1 +1,6 @@
 storeName: doppler-auth-api
+
+auth:
+  name: dopler-token
+  key: apitoken.txt
+  namespace: default
